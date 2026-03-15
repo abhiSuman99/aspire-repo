@@ -1,56 +1,57 @@
-import React, { useState } from "react";
-import { EyeIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react"
 
-const DebitCard: React.FC = () => {
+type Props = {
+  name: string
+  number: string
+  expiry: string
+}
 
-  const [show, setShow] = useState(false);
+const maskNumber = (num: string) => {
+  const parts = num.split(" ")
+  return "•••• •••• •••• " + parts[3]
+}
+
+const DebitCard: React.FC<Props> = ({ name, number, expiry }) => {
+
+  const [show, setShow] = useState(false)
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-end">
 
       <button
+        className="text-green-600 text-sm mb-3"
         onClick={() => setShow(!show)}
-        className="flex items-center gap-2 text-green-600 mb-4"
       >
-        <EyeIcon className="w-5 h-5" />
-        Show card number
+        👁 {show ? "Hide card number" : "Show card number"}
       </button>
 
-      <div className="bg-[#01D167] w-[420px] text-white rounded-2xl shadow-xl p-6">
+      <div className="bg-[#01D167] text-white p-6 rounded-xl w-[380px] shadow-lg">
 
-        <div className="flex justify-end text-lg font-bold">
+        <div className="text-right font-bold">
           aspire
         </div>
 
-        <h3 className="text-xl font-semibold mt-6">
-          Mark Henry
+        <h3 className="text-xl mt-6">
+          {name}
         </h3>
 
-        <p className="tracking-[6px] mt-6 text-lg">
-          {show ? "1234 5678 9012 3456" : "•••• •••• •••• 3456"}
+        <p className="tracking-widest mt-6 text-lg">
+          {show ? number : maskNumber(number)}
         </p>
 
-        <div className="flex gap-8 mt-6 text-sm">
-          <span>Thru: 12/20</span>
+        <div className="flex justify-between mt-6 text-sm">
+          <span>Thru: {expiry}</span>
           <span>CVV: ***</span>
         </div>
 
-        <div className="text-right text-2xl font-bold mt-6">
+        <div className="text-right mt-4 font-bold text-xl">
           VISA
         </div>
 
       </div>
 
-      {/* dots */}
-
-      <div className="flex gap-2 mt-4">
-        <div className="w-6 h-2 bg-green-400 rounded-full"></div>
-        <div className="w-2 h-2 bg-green-200 rounded-full"></div>
-        <div className="w-2 h-2 bg-green-200 rounded-full"></div>
-      </div>
-
     </div>
-  );
-};
+  )
+}
 
-export default DebitCard;
+export default DebitCard
