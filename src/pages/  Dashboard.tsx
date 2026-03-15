@@ -17,6 +17,7 @@ type Card = {
   name: string
   number: string
   expiry: string
+  isFrozen: boolean
 }
 
 const Dashboard: React.FC = () => {
@@ -26,7 +27,8 @@ const Dashboard: React.FC = () => {
       id: 1,
       name: "Mark Henry",
       number: "1234 5678 9012 3456",
-      expiry: "12/26"
+      expiry: "12/26",
+      isFrozen: false
     }
   ])
 
@@ -41,7 +43,8 @@ const Dashboard: React.FC = () => {
       id: Date.now(),
       name,
       number: generateCardNumber(),
-      expiry: generateExpiry()
+      expiry: generateExpiry(),
+      isFrozen: false
     }
 
     const updated = [...cards, newCard]
@@ -65,6 +68,14 @@ const Dashboard: React.FC = () => {
     if (diff < -50 && index > 0) {
       setIndex(prev => prev - 1)
     }
+  }
+
+  const toggleFreeze = () => {
+    setCards(prev =>
+      prev.map((card, i) =>
+        i === index ? { ...card, isFrozen: !card.isFrozen } : card
+      )
+    )
   }
 
   return (
@@ -110,6 +121,7 @@ const Dashboard: React.FC = () => {
                     name={cards[index].name}
                     number={cards[index].number}
                     expiry={cards[index].expiry}
+                    frozen={cards[index].isFrozen}
                   />
                 </div>
 
@@ -131,7 +143,10 @@ const Dashboard: React.FC = () => {
 
                 </div>
 
-                <CardActions />
+                <CardActions
+                  isFrozen={cards[index].isFrozen}
+                  onToggleFreeze={toggleFreeze}
+                />
 
               </div>
 
@@ -149,11 +164,11 @@ const Dashboard: React.FC = () => {
 
       {/* ================= MOBILE ================= */}
 
-      <div className="lg:hidden">
+      <div className="lg:hidden bg-[#0C365A] min-h-screen">
 
         {/* BLUE HEADER */}
 
-        <div className="bg-[#0C365A] text-white px-6 pt-8 pb-28">
+        <div className="text-white px-6 pt-8 pb-28">
 
           <div className="flex justify-between items-center">
 
@@ -195,6 +210,7 @@ const Dashboard: React.FC = () => {
                 name={cards[index].name}
                 number={cards[index].number}
                 expiry={cards[index].expiry}
+                frozen={cards[index].isFrozen}
               />
 
             </div>
@@ -223,9 +239,12 @@ const Dashboard: React.FC = () => {
 
         {/* PULL-UP WHITE SECTION */}
 
-        <div className="bg-white rounded-t-3xl -mt-24 pt-6 pb-24 px-6 shadow-xl">
+        <div className="bg-white rounded-t-3xl -mt-24 pt-6 pb-32 px-6 shadow-xl">
 
-          <CardActions />
+          <CardActions
+            isFrozen={cards[index].isFrozen}
+            onToggleFreeze={toggleFreeze}
+          />
 
           <div className="mt-6">
             <CardInfoPanel />
