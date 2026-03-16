@@ -27,7 +27,7 @@ const DebitCard: React.FC<Props> = ({ name, number, expiry, frozen = false }) =>
       </button>
 
       <div
-        className={`bg-[#01D167] text-white p-6 rounded-xl w-[380px] shadow-lg transition-opacity ${
+        className={`bg-[#01D167] text-white p-6 rounded-xl w-[380px] mx-auto lg:mx-0 shadow-lg transition-opacity ${
           frozen ? "opacity-50" : "opacity-100"
         }`}
       >
