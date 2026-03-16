@@ -17,7 +17,7 @@ const DebitCard: React.FC<Props> = ({ name, number, expiry, frozen = false }) =>
   const [show, setShow] = useState(false)
 
   return (
-    <div className="flex flex-col items-end">
+    <div className="flex flex-col items-center lg:items-end">
 
       <button
         className="text-green-600 text-sm mb-3"
